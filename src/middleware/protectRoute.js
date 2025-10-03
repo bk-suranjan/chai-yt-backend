@@ -1,3 +1,4 @@
+
 import User from "../modal/user.modal.js"
 import ApiError from "../utils/ApiError.js"
 import asyncHandler from "../utils/asyncHandler.js"
@@ -7,7 +8,11 @@ import jwt from 'jsonwebtoken'
 export  const protectedRoute =asyncHandler( async (req,_,next) =>{
     try {
         // console.log(req.cookies.access_token)
+
+        // console.log(req.header('Authorization')?.replace('Bearer ',''))
         const token = req?.cookies?.access_token || req.header('Authorization')?.replace('Bearer ','')
+
+       
 
         if(!token){
             throw new ApiError(400,'token not availabe')
@@ -18,7 +23,7 @@ export  const protectedRoute =asyncHandler( async (req,_,next) =>{
           throw new ApiError(400,'token not vaild')
         }
             //  console.log('decoded -------------',decode)
-           const user  = await User.findById(decode.id)
+           const user  = await User.findById(decode.id).select('-password')
 
            if(!user){
             throw new ApiError(400,'User not found')

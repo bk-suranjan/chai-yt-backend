@@ -192,7 +192,7 @@ export const getRefreshToken =  asyncHandler(async(req,res)=>{
 
 
 export const updateDetails = asyncHandler(async (req, res) => {
-  const { fullName, email, oldPassword, newPassword } = req.body;
+  const { fullName, email } = req.body;
 
   if (!(fullName || email || newPassword)) {
     throw new ApiError(400, 'At least one field required to update');
@@ -201,13 +201,6 @@ export const updateDetails = asyncHandler(async (req, res) => {
   const user = await User.findById(req.user._id);
   if (!user) throw new ApiError(404, 'User not found');
 
-
-  if (newPassword) {
-    if (!oldPassword) throw new ApiError(400, 'Old password required');
-    const checkPassword = await user.isPasswordCorrect(oldPassword);
-    if (!checkPassword) throw new ApiError(400, 'Invalid old password');
-    user.password = newPassword;
-  }
 
   if (fullName) user.fullName = fullName;
   if (email) user.email = email;

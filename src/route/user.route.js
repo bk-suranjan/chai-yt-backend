@@ -20,7 +20,7 @@ route.post('/login',login)
 // secure route
 route.post('/logout',protectedRoute,logout)
 route.post('/get-user',protectedRoute,getUser)
-route.post('update-detals',protectedRoute,updateDetails)
+route.patch('/update-detals',protectedRoute,updateDetails)
 
 route.post('/change-avatar',protectedRoute,upload.single('avatar'),chnageAvatar)
 route.post('/change-cover',protectedRoute,upload.single('coverImage'),changCoverImage)

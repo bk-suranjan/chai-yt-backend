@@ -15,8 +15,10 @@ app.use(express.static('public'))
 // console.log(express.static('public'))
 
 import userRoute from './route/user.route.js'
+import tweetRoute from './route/tweet.route.js'
 
 app.use('/api/user',userRoute)
+app.use('/api/tweet',tweetRoute)
 
 app.get('/',(req,res)=>{
     res.status(200).json({message:'Hello world'})
